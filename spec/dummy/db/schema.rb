@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 2021_02_07_172116) do
   end
 
   create_table "enju_counter_dsr_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "enju_counter_dsr_report_id", null: false
+    t.uuid "enju_counter_dsr_request_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["enju_counter_dsr_report_id"], name: "index_enju_counter_dsr_reports_on_enju_counter_dsr_report_id"
+    t.index ["enju_counter_dsr_request_id"], name: "index_enju_counter_dsr_reports_on_enju_counter_dsr_request_id"
   end
 
   create_table "enju_counter_dsr_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -259,7 +259,7 @@ ActiveRecord::Schema.define(version: 2021_02_07_172116) do
 
   add_foreign_key "enju_counter_dr_d1_reports", "enju_counter_dr_d1_requests", column: "enju_counter_dr_d1_requests_id"
   add_foreign_key "enju_counter_dr_d2_reports", "enju_counter_dr_d2_requests", column: "enju_counter_dr_d2_requests_id"
-  add_foreign_key "enju_counter_dsr_reports", "enju_counter_dsr_reports"
+  add_foreign_key "enju_counter_dsr_reports", "enju_counter_dsr_requests"
   add_foreign_key "enju_counter_ir_a1_reports", "enju_counter_ir_a1_requests", column: "enju_counter_ir_a1_requests_id"
   add_foreign_key "enju_counter_ir_m1_reports", "enju_counter_ir_m1_requests", column: "enju_counter_ir_m1_requests_id"
   add_foreign_key "enju_counter_pr_p1_reports", "enju_counter_pr_p1_requests", column: "enju_counter_pr_p1_requests_id"
