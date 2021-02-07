@@ -10,18 +10,188 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_100649) do
+ActiveRecord::Schema.define(version: 2021_02_07_172116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "enju_counter_requests", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.json "response", default: {}, null: false
+  create_table "enju_counter_dr_d1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_dr_d1_requests_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_dr_d1_requests_id"], name: "index_enju_counter_dr_d1_reports_on_dr_d1_requests_id"
+  end
+
+  create_table "enju_counter_dr_d1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_dr_d2_reports", force: :cascade do |t|
+    t.uuid "enju_counter_dr_d2_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_dr_d2_requests_id"], name: "index_enju_counter_dr_d2_reports_on_dr_d2_requests_id"
+  end
+
+  create_table "enju_counter_dr_d2_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_dsr_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "enju_counter_dsr_report_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_dsr_report_id"], name: "index_enju_counter_dsr_reports_on_enju_counter_dsr_report_id"
+  end
+
+  create_table "enju_counter_dsr_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_ir_a1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_ir_a1_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_ir_a1_requests_id"], name: "index_enju_counter_ir_a1_reports_on_ir_a1_requests_id"
+  end
+
+  create_table "enju_counter_ir_a1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_ir_m1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_ir_m1_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_ir_m1_requests_id"], name: "index_enju_counter_ir_m1_reports_on_ir_m1_requests_id"
+  end
+
+  create_table "enju_counter_ir_m1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_pr_p1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_pr_p1_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_pr_p1_requests_id"], name: "index_enju_counter_pr_p1_reports_on_pr_p1_requests_id"
+  end
+
+  create_table "enju_counter_pr_p1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "enju_counter_request_id", null: false
+    t.string "report_type"
+    t.uuid "report_id"
+    t.jsonb "response", default: {}, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_request_id"], name: "index_enju_counter_reports_on_enju_counter_request_id"
+    t.index ["report_type", "report_id"], name: "index_enju_counter_reports_on_report"
+  end
+
+  create_table "enju_counter_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.json "response", default: {}, null: false
+    t.string "request_type"
+    t.uuid "request_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_type", "request_id"], name: "index_enju_counter_requests_on_request"
     t.index ["user_id"], name: "index_enju_counter_requests_on_user_id"
+  end
+
+  create_table "enju_counter_tr_b1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_b1_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_b1_requests_id"], name: "index_enju_counter_tr_b1_reports_on_tr_b1_requests_id"
+  end
+
+  create_table "enju_counter_tr_b1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_b2_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_b2_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_b2_requests_id"], name: "index_enju_counter_tr_b2_reports_on_tr_b2_requests_id"
+  end
+
+  create_table "enju_counter_tr_b2_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_b3_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_b3_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_b3_requests_id"], name: "index_enju_counter_tr_b3_reports_on_tr_b3_requests_id"
+  end
+
+  create_table "enju_counter_tr_b3_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_j1_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_j1_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_j1_requests_id"], name: "index_enju_counter_tr_j1_reports_on_tr_j1_requests_id"
+  end
+
+  create_table "enju_counter_tr_j1_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_j2_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_j2_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_j2_requests_id"], name: "index_enju_counter_tr_j2_reports_on_tr_j2_requests_id"
+  end
+
+  create_table "enju_counter_tr_j2_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_j3_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_j3_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_j3_requests_id"], name: "index_enju_counter_tr_j3_reports_on_tr_j3_requests_id"
+  end
+
+  create_table "enju_counter_tr_j3_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "enju_counter_tr_j4_reports", force: :cascade do |t|
+    t.uuid "enju_counter_tr_j4_requests_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enju_counter_tr_j4_requests_id"], name: "index_enju_counter_tr_j4_reports_on_tr_j4_requests_id"
+  end
+
+  create_table "enju_counter_tr_j4_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "profiles", comment: "プロフィール", force: :cascade do |t|
@@ -87,7 +257,21 @@ ActiveRecord::Schema.define(version: 2021_02_07_100649) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "enju_counter_dr_d1_reports", "enju_counter_dr_d1_requests", column: "enju_counter_dr_d1_requests_id"
+  add_foreign_key "enju_counter_dr_d2_reports", "enju_counter_dr_d2_requests", column: "enju_counter_dr_d2_requests_id"
+  add_foreign_key "enju_counter_dsr_reports", "enju_counter_dsr_reports"
+  add_foreign_key "enju_counter_ir_a1_reports", "enju_counter_ir_a1_requests", column: "enju_counter_ir_a1_requests_id"
+  add_foreign_key "enju_counter_ir_m1_reports", "enju_counter_ir_m1_requests", column: "enju_counter_ir_m1_requests_id"
+  add_foreign_key "enju_counter_pr_p1_reports", "enju_counter_pr_p1_requests", column: "enju_counter_pr_p1_requests_id"
+  add_foreign_key "enju_counter_reports", "enju_counter_requests"
   add_foreign_key "enju_counter_requests", "users"
+  add_foreign_key "enju_counter_tr_b1_reports", "enju_counter_tr_b1_requests", column: "enju_counter_tr_b1_requests_id"
+  add_foreign_key "enju_counter_tr_b2_reports", "enju_counter_tr_b2_requests", column: "enju_counter_tr_b2_requests_id"
+  add_foreign_key "enju_counter_tr_b3_reports", "enju_counter_tr_b3_requests", column: "enju_counter_tr_b3_requests_id"
+  add_foreign_key "enju_counter_tr_j1_reports", "enju_counter_tr_j1_requests", column: "enju_counter_tr_j1_requests_id"
+  add_foreign_key "enju_counter_tr_j2_reports", "enju_counter_tr_j2_requests", column: "enju_counter_tr_j2_requests_id"
+  add_foreign_key "enju_counter_tr_j3_reports", "enju_counter_tr_j3_requests", column: "enju_counter_tr_j3_requests_id"
+  add_foreign_key "enju_counter_tr_j4_reports", "enju_counter_tr_j4_requests", column: "enju_counter_tr_j4_requests_id"
   add_foreign_key "profiles", "roles", column: "required_role_id"
   add_foreign_key "user_has_roles", "roles"
   add_foreign_key "user_has_roles", "users"
